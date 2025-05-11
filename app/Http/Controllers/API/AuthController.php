@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    // Register
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -43,8 +42,6 @@ class AuthController extends Controller
             'message' => 'User registered successfully',
         ]);
     }
-
-    // Login
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -73,7 +70,6 @@ class AuthController extends Controller
         ]);
     }
 
-    // Get Authenticated User
     public function user(Request $request)
     {
         return response()->json([
@@ -81,7 +77,6 @@ class AuthController extends Controller
         ]);
     }
 
-    // Logout
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
