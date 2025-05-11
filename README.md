@@ -1,66 +1,221 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Certainly! Here's a **README.md** template for your project, explaining how users can set up the application on their local system, including API setup and usage, with instructions on using the Postman collection.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+---
 
-## About Laravel
+# Laravel Authentication with Role-Based Access & API
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This is a Laravel project that implements user authentication, role-based access control, and API authentication using **Sanctum**. The project includes:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* User registration and login API with roles (Admin, User).
+* Role-based access control for both web and API routes.
+* Postman collection for API testing.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Prerequisites
 
-## Learning Laravel
+Before setting up the project locally, ensure that you have the following installed on your system:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* PHP 8.1 or higher
+* Composer
+* Laravel 10 or higher
+* MySQL or any other supported database
+* Node.js and npm (for frontend assets, if applicable)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Install Dependencies
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Clone this repository to your local machine:
 
-## Laravel Sponsors
+```bash
+git clone https://github.com/Hannanazam/authentication-task-app
+cd authentication-task-app
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Setup Environment Variables
 
-### Premium Partners
+1. **Copy `.env.example` to `.env`**:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```bash
+cp .env.example .env
+```
 
-## Contributing
+2. **Update `.env` with your local configuration**:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=your_database_username
+DB_PASSWORD=your_database_password
 
-## Code of Conduct
+APP_KEY=base64:yourAppKey
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+> To generate the `APP_KEY`, run:
 
-## Security Vulnerabilities
+```bash
+php artisan key:generate
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Install Composer Dependencies
 
-## License
+Run the following command to install the required PHP dependencies:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+composer install
+```
+
+### Install NPM Dependencies (Optional)
+
+If your project includes frontend assets, install the JavaScript dependencies:
+
+```bash
+npm install
+```
+
+If you need to compile assets, run:
+
+```bash
+npm run dev
+```
+
+### Run Migrations
+
+Run the migrations to set up the database:
+
+```bash
+php artisan migrate
+```
+
+This will create the necessary tables for users, roles, and authentication.
+
+### Seed Database (Optional)
+
+To populate the database with sample data, including default roles and users, you can run:
+
+```bash
+php artisan db:seed
+```
+
+---
+
+## API Authentication Setup with Sanctum
+
+1. **Install Sanctum**:
+
+```bash
+composer require laravel/sanctum
+```
+
+2. **Publish Sanctum's Configuration**:
+
+```bash
+php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+```
+
+3. **Run the Sanctum Migrations**:
+
+```bash
+php artisan migrate
+```
+
+---
+
+## Using the Application
+
+### API Endpoints
+
+The following API endpoints are available:
+
+* **POST /api/auth/register** – Register a new user.
+* **POST /api/auth/login** – Login a user and receive an API token.
+* **GET /api/auth/user** – Retrieve the authenticated user's details.
+* **GET /api/user/data** – Retrieve the user's data.
+* **GET /api/user/admin** – Retrieve the admin's data.
+
+#### Example POST Request: Register a New User
+
+```json
+POST /api/auth/register
+{
+  "name": "Hannan",
+  "email": "hannan@gmail.com",
+  "password": "12345678",
+  "role": "User"
+}
+```
+
+#### Example POST Request: Login a User
+
+```json
+POST /api/auth/login
+{
+  "email": "hannan@gmail.com",
+  "password": "12345678"
+}
+```
+
+---
+
+### Postman Collection
+
+A **Postman collection** is provided in the **foot directory** for testing the API endpoints. You can import the collection to your Postman client:
+
+1. Open Postman.
+2. Click on **Import**.
+3. Select **Folder** and navigate to the `foot` directory.
+4. Import the collection for testing.
+
+---
+
+## Role-Based Access
+
+The system uses **Spatie Laravel Permission** to manage roles and permissions. The two roles implemented are:
+
+* **Admin**
+* **User**
+
+Upon registration, the user is assigned the role as specified in the registration request (`role` field). Admin users have access to `/admin/dashboard`, while regular users have access to `/user/dashboard`.
+
+### Role Middleware
+
+Routes are protected based on roles:
+
+* **/admin/dashboard** is protected by `role:Admin`.
+* **/user/dashboard** is protected by `role:User`.
+
+If a user tries to access a route that they are not authorized to, a `403 Forbidden` error will be returned.
+
+---
+
+## Running the Application Locally
+
+1. **Start Laravel Development Server**:
+
+```bash
+php artisan serve
+```
+
+This will start the development server at `http://127.0.0.1:8000`.
+
+2. **Access the application in your browser**:
+
+   * For Admin Dashboard: `http://127.0.0.1:8000/admin/dashboard`
+   * For User Dashboard: `http://127.0.0.1:8000/user/dashboard`
+
+---
+
+## Troubleshooting
+
+* **If you face any issues with Sanctum authentication**:
+
+  * Make sure you’re correctly sending the `Authorization` header with `Bearer <token>` for protected routes.
+  * Clear the session and cookies if there's any caching issue.
+  * Check your `php.ini` file to ensure `curl` is enabled for making requests.
+
+---
+
+## Conclusion
+
+This project demonstrates a simple but robust authentication system using Laravel, Sanctum, and role-based access control. The included Postman collection helps in testing the API endpoints efficiently.
+
+If you have any questions or need help, feel free to open an issue or reach out!

@@ -2,8 +2,11 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Auth\Access\AuthorizationException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class Handler extends ExceptionHandler
 {
@@ -18,13 +21,22 @@ class Handler extends ExceptionHandler
         'password_confirmation',
     ];
 
-    /**
-     * Register the exception handling callbacks for the application.
-     */
-    public function register(): void
+    public function render($request, Throwable $exception)
     {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
+        if ($request->is('api/*')  && $exception instanceof HttpExceptionInterface) {
+            $code = $exception->getStatusCode();
+            if ($code == 404) {
+                return response()->json([
+                    'message' => '404 not Found'
+                ], 404);
+            }
+        }
+        if ($request->is('api/*') && $exception) {
+            return response()->json([
+                'message' => $exception->getMessage()
+            ], 401);
+        }
+        return parent::render($request, $exception);
     }
+    
 }
