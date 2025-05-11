@@ -128,6 +128,7 @@ The following API endpoints are available:
 
 * **POST /api/auth/register** – Register a new user.
 * **POST /api/auth/login** – Login a user and receive an API token.
+* **POST /api/auth/logout** – Log out and invalidate the API token.
 * **GET /api/auth/user** – Retrieve the authenticated user's details.
 * **GET /api/user/data** – Retrieve the user's data.
 * **GET /api/user/admin** – Retrieve the admin's data.

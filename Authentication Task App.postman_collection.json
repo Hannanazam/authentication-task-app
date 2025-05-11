@@ -60,6 +60,63 @@
 			"response": []
 		},
 		{
+			"name": "Logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"admin@gmail.com\",\r\n  \"password\": \"admin@gmail.com\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/auth/logout",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"auth",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Authenticated User Details",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"hannan@gmail.com\",\r\n  \"password\": \"hannan@gmail.com\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/auth/user",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"auth",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "User Data",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -125,7 +182,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "4|0OurCL7qn3rzo2x95sC15Laanbz9lzBl00GEq9oA64c3714a",
+				"value": "6|4w0RZEVsUi6hh6aBY7dIYoUItnWYOSmcfKRgDjzl0cd8d870",
 				"type": "string"
 			}
 		]
