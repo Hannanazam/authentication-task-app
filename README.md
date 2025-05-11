@@ -1,7 +1,3 @@
-Certainly! Here's a **README.md** template for your project, explaining how users can set up the application on their local system, including API setup and usage, with instructions on using the Postman collection.
-
----
-
 # Laravel Authentication with Role-Based Access & API
 
 This is a Laravel project that implements user authentication, role-based access control, and API authentication using **Sanctum**. The project includes:
